@@ -1,0 +1,30 @@
+#content {
+  padding: 1.5em 0.5em 0.5em 0.5em;
+  background: #ffffff;
+  color: black;
+  h2 {
+    font-size: 2em;
+    margin-bottom: 0.3em;
+  }
+  p {
+    margin-bottom: 0.5em;
+    line-height: 125%;
+  }
+  input[type=submit] {
+      color: green;
+    }
+    #flash {
+      margin-bottom: 1em;
+      .alert {
+        background: red;
+        color: white;
+      }
+      .message {
+        padding: 0.5em;
+      }
+      .notice {
+        color: green;
+        background: #ffff99;
+      }
+    }
+}

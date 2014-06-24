@@ -1,0 +1,74 @@
+require 'spec_helper'
+
+
+describe Bookmark do
+  before(:each) do
+    @bookmark = Bookmark.new(:url => "http://www.heise.de", :title => "Heise Online Webseite")
+  end
+  
+  describe "validations" do 
+    context "given a valid bookmark" do 
+      it "has a title that has a length within 10 and 255 characters" do
+        @bookmark.title = "Rails-Expertenwissen"
+        @bookmark.should have(:no).errors_on(:title)
+      end
+      
+      it "has an url that has a length of maximum 2083 characters" do
+        @bookmark.url = "http://rails-exptertenwissen.de"
+        @bookmark.should have(:no).errors_on(:url)
+      end
+      
+      it "has notes that have a length of maximum 1024 characters" do
+        
+        @bookmark.notes = "Die Webseite zum Buch Ruby on Rails 3.1 Expertenwissen"
+        @bookmark.should have(:no).errors_on(:notes)
+      end
+    end
+  end
+      
+  
+      
+      describe "validations" do 
+        context "given an invalid bookmark" do 
+          it "has no title" do
+            @bookmark.title = ""
+            @bookmark.should have(2).errors_on(:title)
+          end
+
+          it "has a title that has a length less then 10 characters" do
+            #Der Titel hat 9 Zeichen
+            @bookmark.title = "a"*9
+            @bookmark.should have(1).error_on(:title)
+          end
+
+          it "has a title that has a length more than 255 characters" do
+            # Der Titel hat 256 Zeichen
+            @bookmark.title = "a"*256
+            @bookmark.should have(1).error_on(:title)
+          end
+
+          it "has no url" do
+            @bookmark.url = ""
+            @bookmark.should have(1).error_on(:url)
+          end
+
+          it "has an url that has a length more than 2083 characters" do
+            # Die URL hat 2084 Zeichen
+            @bookmark.url = "a"*2084
+            @bookmark.should have(2).errors_on(:url)
+          end
+
+          it "has an url that does not begin with http or https" do
+            @bookmark.url = "rails-expertenwissen.de"
+            @bookmark.should have(1).error_on(:url)
+          end
+
+          it "has notes that have a length more than 1024 characters" do
+            # Die Notes haben 1025 Zeichen
+            @bookmark.notes = "a"*1025
+            @bookmark.should have(1).error_on(:notes)
+          end
+      
+    end
+  end
+end

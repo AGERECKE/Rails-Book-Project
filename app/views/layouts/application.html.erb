@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= Settings.title -%> </title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+ 
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div id="header-wrapper">
+		<div id="header">
+			<h1><%= link_to "Bookmarks on Rails", root_path %></h1>
+			<div id="profile">
+				<% if user_signed_in? %>
+					<%= link_to current_user.email, current_user, :id => "user-profile" %>
+					| <%= link_to "Logout", destroy_user_session_path, :id => "logout" %>
+					<% else %>
+					<%= link_to "Sign in", new_user_session_path, :id => "sign-in" %>
+					| <%=link_to "Register", new_user_registration_path, :id => "register" %>
+					<% end %>
+				</div>
+				<br class="clear" />
+				</div>
+				</div>
+				<div id="main">
+					<div id="content">
+						<% if flash.present? %>
+							<div id="flash">
+								<% flash.each do |type, message| -%>
+								<div class="message <%= type %>">
+									<%= message %>
+									</div>
+									<% end %>
+								</div>
+								<% end %>
+						<%= yield %>
+					</div>
+					<div id="sidebar">
+						<div id="search">
+							<%= form_tag(search_path, :method => :get ) do %>
+								<%= text_field :search, :q, :value => @query %>
+								<%= submit_tag "Search" %>
+								<% end -%>
+								<br class="clear" />
+								</div>
+						<%= link_to("Save Bookmark", new_user_bookmark_path(current_user), :class => "save-bookmark") if user_signed_in? %>
+						<%= yield :sidebar %>
+					</div>
+				</div>
+				
+ <%= javascript_include_tag "application" %>
+</body>
+</html>

@@ -1,0 +1,21 @@
+require 'spec_helper'
+
+describe Bookmark do
+  describe "validations" do
+    context "given a valid bookmark" do
+      it "has a title that has a length within 10 and 255 characters"
+      it "has an url that has a length of maximum 2083 characters"
+      it "has notes that have a length of maximum 1024 characters"
+  end
+  
+  context "given an invalid bookmark" do
+    it "has no title"
+    it "has a title that has a length less than 10 characters"
+    it "has a title that has a length more than 255 characters"
+    it "has no url"
+    it "has an url that has a length more than 2083 characters"
+    it "has an url that does not begin with http or https"
+    it "has notes that have a length more than 1024 characters"
+  end
+ end
+end

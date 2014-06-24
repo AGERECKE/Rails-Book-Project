@@ -1,0 +1,59 @@
+$theme_color: #8b1a00;
+
+.highlight{
+background-color: #FFFF00;
+}
+
+
+@mixin rounded_corners($radius) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+}
+
+.bookmark{
+  border-top: 1px solid #e9e9e9;
+  padding: 0.25em;
+  span.host {
+    display: block;
+    font-size: 0.8em;
+    color: #555;
+  }
+  div.saved-by {
+    font-size: 0.8em;
+    color: #555;
+    text-align: right;
+    margin-top: 10px;
+    a:link, a:visited {
+      background: $theme_color;
+      padding: 3px;
+      color: white;
+      text-decoration: none;
+      @include rounded_corners(2px)
+    }
+    a:hover {
+      background: $theme_color*1.3
+    }
+    .tag {
+      line-height: 25px;
+      background: yellow;
+    }
+    a.tag:link,
+    a.tag:visited {
+      background: green*1.3;
+    }
+    a.tag:hover {
+      background: green;
+    }
+  }
+  p.notes {
+    margin-top: 0.25em;
+  }
+  .user {
+    margin-top: 10px;
+    font-size: 0.8em;
+  }
+
+}
+
+

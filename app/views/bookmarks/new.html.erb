@@ -1,0 +1,5 @@
+<h2>Save Bookmark</h2>
+<%= form_for(@bookmark,  :url => user_bookmarks_path) do |f| %>
+	<%= render "form", :f => f %>
+	<%= f.submit "Save" %>
+<% end %>

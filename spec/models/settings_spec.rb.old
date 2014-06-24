@@ -1,0 +1,41 @@
+require "spec_helper"
+
+describe Settings do
+  describe ".read_configuration" do
+    it "reads the default settings" do 
+      Settings.source_file= "settings.yml"
+      settings = <<-SETTINGS
+      default: &default
+         application_name: "Beispielprojekt"
+         title: "Beispielprojekt zum Buch"
+         
+    test:
+    <<: *default
+    SETTINGS
+    File.open("settings.yml", "w") {|f| f.write(settings)}
+    
+    Settings.read_configuration
+    Settings.title.should eql("Beispielprojekt zum Buch")
+    
+    File.delete("settings.yml")
+  end
+  
+  it "reads settings from the current environment" do
+    Settings.source_file = "settings.yml"
+    settings = <<-SETTINGS
+    default: &default
+      application_name: "Beispielprojekt"
+      title: "Beispielprojekt zum Buch"
+      test:
+      <<: &default
+      application_name: "Test-Beispielprojekt"
+      SETTINGS
+      File.open("settings.yml", "w") { |f| f.write(settings)}
+      
+      Settings.read_configuration
+      Settings.application_name.should eql("Test-Beispielprojekt")
+      
+      File.delete("settings.yml")
+    end
+  end
+end

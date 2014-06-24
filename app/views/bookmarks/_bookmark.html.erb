@@ -1,0 +1,27 @@
+<div class="bookmark">
+	<%= link_to bookmark.title, bookmark.link.url %>
+	<span class="host">
+		<%= URI.parse(bookmark.link.url).host %>
+	</span>
+	<% if bookmark.notes.present? %>
+		<p class="notes">
+			<%= bookmark.notes %>
+		</p>
+		<% end %>
+			<% if user_can_administrate_bookmark?(bookmark) %>
+				<%= link_to "delete", user_bookmark_path(bookmark.user, bookmark), :method => :delete, :confirm => "Are you sure?" %>
+				<%= link_to "edit", edit_user_bookmark_path(bookmark.user, bookmark) %>
+				<% end %>
+		<div class="saved-by">
+			saved by
+			<%= link_to bookmark.user.login, user_path(bookmark.user) %>
+			<%= distance_of_time_in_words bookmark.created_at, Time.now %>
+			ago
+			<% if bookmark.tags.present? %> in
+				<% bookmark.tags.each do |tag| %>
+					<%= link_to tag.name, tag_path(tag.name) %>
+				<% end %>
+				<% end %>
+				</div>
+			</div>
+			<br class="clear" />

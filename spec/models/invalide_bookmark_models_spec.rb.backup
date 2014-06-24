@@ -1,0 +1,12 @@
+require 'spec_helper'
+
+describe Bookmark do
+  before(:each) do
+    @bookmark = Bookmark.new(:url => "http://www.heise.de", :title => "Heise Online Webseite")
+  end
+  
+
+    end
+  end
+end
+      

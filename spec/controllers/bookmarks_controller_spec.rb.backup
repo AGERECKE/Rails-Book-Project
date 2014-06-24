@@ -1,0 +1,48 @@
+require 'spec_helper'
+
+describe BookmarksController do
+include Devise::TestHelpers
+  before(:each) do
+    @user = User.create(:login => "admin",
+                        :email => "admin@test.com",
+                        :password =>"secret",
+                        :password_confirmation => "secret")
+                        sign_in :user, @user
+                      end
+                      
+ describe "GET new" do
+   context "given the user is not signed in" do
+     it "is not accessible" do
+       sign_out @user
+       get :new, :user_id => @user.id
+       response.should_not be_success
+     end
+   end 
+   context "given the user is signed in" do
+     it "is accessible" do
+       get :new, :user_id => @user.id
+       response.should be_success
+     end
+   end
+ end
+ 
+ describe "POST create" do 
+   context "given the user is not signed in" do
+     it "is not accessible" do
+       sign_out @user
+       post :create, :user_id => @user.id
+       response.should_not be_success
+     end
+   end
+   
+   context "given the user is signed in" do
+     it "is accessible" do
+       post :create, :user_id => @user.id
+       response.should be_redirect
+     end
+   end
+ end
+end
+
+
+      

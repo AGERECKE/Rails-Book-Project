@@ -1,0 +1,56 @@
+<h2>Search</h2>
+<% @search.each_hit_with_result do |hit, link| %>
+<% if hit.highlights(:url).present?%>
+	<%= link_to raw(highlight_url(hit.highlights(:url).first)),
+			hit.stored(:url).first,
+			:target => :blank %>
+		<% else %>
+		<%= link_to hit.stored(:url).first,
+			hit.stored(:url).first,
+			:target => :blank %>
+		<% end -%>
+	<div class="bookmark">
+		<div class="hit-score">
+			<%= hit.score %>
+		</div>
+	<%= link_to link.url, link.url, :target => :blank %>
+	<span class="host">
+		<%= URI.parse(link.url).host %>
+	</span>
+	<% link.bookmarks.limit(3).each do |bookmark| %>
+		<div class="saved-by">
+		<h4><%= bookmark.title %></h4>
+		saved
+		<%= distance_of_time_in_words link.
+				created_at, Time.now %>
+				ago by <%= link_to bookmark.user.login, user_path(bookmark.user) %>
+		</div>
+		<% end %>
+	</div>
+	<br class="clear" />
+	<% end %>
+	<%= paginate @search %>	
+	
+	<%= content_for :sidebar do %>
+		<% if @search.present? && 
+			@search.facet(:domain).present? && 
+			@search.facet(:domain).rows.count > 0 || 
+			params[:domain].present? %>
+	<h2>Domain</h2>
+		<ul class="facets">
+			<% @search.facet(:domain).rows.each do |result| %>
+			<li>
+				<%= link_to "#{result.value} (#{result.count})",
+				search_path({:search => {:domain => result.value,
+					:q => @query}})%>
+				<%= link_to "-remove",
+					search_path({:search => {:domain => nil,
+						:q => @query}}),
+						:class => "remove" if params[:search][:domain].
+						present? %>
+				</li>
+				<% end %>
+			</ul>
+		<% end %>
+	<% end %>
+			

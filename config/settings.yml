@@ -1,0 +1,12 @@
+default: &default
+    application_name: "Beispielprojekt"
+    title: "Beispielprojekt zum Buch"
+    
+development:
+    <<: *default
+    
+test:
+    <<: *default
+    
+production:
+    <<: *default
